@@ -1,5 +1,5 @@
 import React from 'react';
-import config from './config';
+import config from '../config';
 
 
 export default class Adopt extends React.Component {
@@ -53,7 +53,7 @@ export default class Adopt extends React.Component {
         return res.json();
       })
       .then(dogs => {
-        console.log("server gave us all dogs:", dogs)
+        // console.log("server gave us all dogs:", dogs)
         this.setState({
           allDogs: dogs,
         });
@@ -67,14 +67,14 @@ export default class Adopt extends React.Component {
 
   //Get Statement to get LIST of people
   getLine = () => {
-    console.log('this.state.adoptionpets', this.state.adoptionsPets)
+    // console.log('this.state.adoptionpets', this.state.adoptionsPets)
     if (this.events) {
       this.events.close();
     }
     this.events = new EventSource(`${config.REACT_APP_API_ENDPOINT}api/updateEvent`);
     this.events.onmessage = (event) => {
       const people = JSON.parse(event.data);
-      console.log('people.adoptedPet is', people)
+      // console.log('people.adoptedPet is', people)
       if (people) {
         this.setState({
           peopleInLine: people.humans,
@@ -87,12 +87,12 @@ export default class Adopt extends React.Component {
       }
     }
     this.events.addEventListener('open', (e) => {
-      console.log('eventsource opened', e);
-      console.log('eventsource opened data', e.data);
+      // console.log('eventsource opened', e);
+      // console.log('eventsource opened data', e.data);
     })
     this.events.onerror = (e) => {
-      console.log('eventsource error', e)
-      console.log('eventsource opened error', e.data);
+      // console.log('eventsource error', e)
+      // console.log('eventsource opened error', e.data);
     };
   }
 
@@ -101,7 +101,7 @@ export default class Adopt extends React.Component {
     e.preventDefault();
     const { name } = e.target;
 
-    console.log('name is', name.value);
+    // console.log('name is', name.value);
     const URL = `${config.REACT_APP_API_ENDPOINT}api/humans`;
     return fetch(URL, {
       method: 'POST',
@@ -115,7 +115,7 @@ export default class Adopt extends React.Component {
     })
       .then(res => res.json())
       .then((list) => {
-        console.log('list is', list);
+        // console.log('list is', list);
         this.setState({
           peopleInLine: list
         })
@@ -166,14 +166,14 @@ export default class Adopt extends React.Component {
     })
   }
   setCurrentDog = () => {
-    console.log("setting current dog: ", this.state.allDogs[0]);
+    // console.log("setting current dog: ", this.state.allDogs[0]);
     this.setState({
       currentDog: this.state.allDogs[0],
     });
   }
 
   getCurrentDog() {
-    console.log('current dog is', this.state.currentDog);
+    // console.log('current dog is', this.state.currentDog);
     if (this.state.currentDog) {
       return <div>
         <h3>{this.state.currentDog.name}</h3>
@@ -229,7 +229,7 @@ export default class Adopt extends React.Component {
             </input>
             <button
               type='submit'
-              id='lineUpButton'>
+              id='startButton'>
               Line up!
             </button>
           </form>
@@ -247,8 +247,8 @@ export default class Adopt extends React.Component {
           {(this.state.peopleInLine.length === 0) && <p>No one is in line.</p>}
           {
             this.state.peopleInLine.map((person) => {
-              console.log('person is', person);
-              return <p className="personBox"><b>{person + ' '}</b></p>;
+              // console.log('person is', person);
+              return <p className="personBox" key={person}><b>{person + ' '}</b></p>;
             })
           }
           </div>

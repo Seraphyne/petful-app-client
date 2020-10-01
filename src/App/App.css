@@ -70,17 +70,26 @@ input[type='text'] {
 #startButton {
   margin-left: auto;
   margin-right: auto;
-  color: black;
+  color: #282c34;
   font-size: 16px;
-  border: 1px solid whitesmoke;
-  background-color: ghostwhite;
+  background-color:#FFD700;
   border-radius: 2px;
   text-decoration: none;
-  padding: 2px;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+input{
+  font-size: 15px;
 }
 
 #buttonContainer {
   text-align: center;
+}
+
+.button{
+  padding: 20px;
 }
 
 form {
